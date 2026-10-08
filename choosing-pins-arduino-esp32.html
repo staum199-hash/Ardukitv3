@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choosing the Right Pins on Arduino Uno and ESP32</title>
+<meta name="description" content="Which pins are safe to use on an Arduino Uno and an ESP32 DevKit: reserved pins, input-only GPIOs, strapping pins, ADC limits, I²C pins and 3.3 V vs 5 V levels.">
+<link rel="canonical" href="https://ardukit.netlify.app/guides/choosing-pins-arduino-esp32.html">
+<meta name="google-adsense-account" content="ca-pub-3924102528396167">
+<meta name="theme-color" content="#0b0c14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1fb" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Choosing the Right Pins on Arduino Uno and ESP32">
+<meta property="og:description" content="Which pins are safe to use on an Arduino Uno and an ESP32 DevKit: reserved pins, input-only GPIOs, strapping pins, ADC limits, I²C pins and 3.3 V vs 5 V levels.">
+<meta property="og:url" content="https://ardukit.netlify.app/guides/choosing-pins-arduino-esp32.html">
+<link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+<link rel="stylesheet" href="../site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3924102528396167" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="site-header"><div class="bar">
+<a class="brand" href="../index.html"><img src="../icons/icon-192.png" alt="" width="26" height="26"><span>Electronics Toolkit</span></a>
+<nav aria-label="Main"><a href="../index.html">Toolkit</a><a href="../guides/index.html" aria-current="page">Guides</a><a href="../about.html">About</a></nav>
+</div></header>
+<main id="content">
+<article>
+<p class="meta"><a href="index.html">Guides</a> &rsaquo; Choosing the Right Pins on Arduino Uno and ESP32</p>
+<h1>Choosing the Right Pins on Arduino Uno and ESP32</h1>
+
+<p class="lead">Not every pin on a development board is equally free to use. Some are wired to USB, some to flash memory, some change how the chip boots, and some cannot output a signal at all. Picking the right pin early saves hours of debugging. This guide lists the traps on the two most popular beginner boards.</p>
+
+<h2>Arduino Uno and Nano (ATmega328P)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Pins</th><th>What to know</th></tr></thead>
+<tbody>
+<tr><td>D0, D1</td><td>Serial (RX, TX) shared with USB. Avoid them while using the Serial Monitor or uploading code.</td></tr>
+<tr><td>D2, D3</td><td>The two external interrupt pins. Keep them for buttons or sensors that need fast response.</td></tr>
+<tr><td>D3, D5, D6, D9, D10, D11</td><td>PWM-capable (marked with ~). Use them for dimming LEDs or driving motors with <code>analogWrite()</code>.</td></tr>
+<tr><td>D13</td><td>Also drives the on-board LED, so a load on it can dim or confuse that LED.</td></tr>
+<tr><td>A0 – A5</td><td>Analog inputs. They can also be used as digital pins.</td></tr>
+<tr><td>A4, A5</td><td>I²C (SDA and SCL). If any I²C device is connected, treat these two as taken.</td></tr>
+</tbody></table></div>
+<p>The Uno works at 5 V logic. Each pin should stay below about 20 mA, and the sum of all pins should stay well under the chip’s total limit. A good default for simple projects is to use D2 to D12 for digital devices and A0 to A3 for analog sensors.</p>
+
+<aside class="ad-slot" aria-label="Advertisement"><span class="ad-label">Advertisement</span><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3924102528396167" data-ad-slot="4335930823" data-ad-format="auto" data-full-width-responsive="true"></ins></aside>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<h2>ESP32 DevKit</h2>
+<p>The ESP32 has many more pins, but its pins are less uniform. Watch for these groups:</p>
+<ul>
+<li><strong>GPIO 6 to 11 are connected to the on-board flash memory.</strong> Do not use them. A device on these pins can crash the board.</li>
+<li><strong>GPIO 34, 35, 36 and 39 are input-only.</strong> They cannot be outputs, and they have no internal pull-up or pull-down resistors. A button on one of them needs an external pull-up resistor (10 kΩ is a good choice).</li>
+<li><strong>Strapping pins</strong> (notably GPIO 0, 2, 12 and 15, and to a lesser degree GPIO 5) are read at reset to decide boot mode and flash voltage. A circuit that pulls them to the wrong level can stop the board from starting. GPIO 5 is generally fine but outputs a short PWM signal at boot.</li>
+<li><strong>GPIO 1 and 3</strong> are the default serial pins (TX0 and RX0) used for uploading and logging.</li>
+<li><strong>ADC2 pins</strong> (GPIO 0, 2, 4, 12 to 15 and 25 to 27) cannot be read with <code>analogRead()</code> while Wi-Fi is active. For analog sensors in Wi-Fi projects, use ADC1 pins: GPIO 32 to 39.</li>
+<li><strong>I²C</strong> defaults to GPIO 21 (SDA) and GPIO 22 (SCL), but the ESP32 can map I²C to other pins in software.</li>
+</ul>
+<p>Pins that are used most often without surprises are GPIO 4, 13, 14, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 32 and 33.</p>
+
+<h2>Voltage levels: 5 V against 3.3 V</h2>
+<p>The Uno uses 5 V logic and the ESP32 uses 3.3 V. The ESP32’s pins are <strong>not 5 V tolerant</strong>, so a 5 V output connected directly to one can damage it.</p>
+<ul>
+<li>The HC-SR04 ultrasonic sensor is powered from 5 V and its ECHO output is also 5 V. With an ESP32, put a voltage divider on ECHO: 1 kΩ from ECHO to the GPIO and 2 kΩ from the GPIO to ground gives about 3.3 V.</li>
+<li>For 5 V logic in general, use a level shifter module.</li>
+<li>In the other direction, a 3.3 V sensor such as an MPU6050 or ENS160 breakout on an Uno’s 5 V I²C lines needs a board that includes level shifting, or an external shifter.</li>
+</ul>
+
+<h2>Shared buses: I²C</h2>
+<p>I²C is a two-wire bus that lets many devices share the same SDA and SCL pins, as long as each has a different address. The MPU6050 uses 0x68 (or 0x69 if its AD0 pin is high) and the ENS160 uses 0x53 (or 0x52 on some boards), so they can sit on the same bus together. Two devices with the same address cannot.</p>
+
+<h2>Pin checklist</h2>
+<ol>
+<li>Is the pin free of boot, USB and flash functions?</li>
+<li>Does it support the direction you need (input only or output)?</li>
+<li>For analog readings: is it an ADC pin, and is Wi-Fi going to be on?</li>
+<li>Does the device’s signal voltage match the board’s logic level?</li>
+<li>Are two devices accidentally assigned to the same pin?</li>
+<li>Does the total current stay within the limits of the pin and the chip?</li>
+</ol>
+<p>The toolkit’s project wizard runs these checks automatically as you choose pins, and draws a live view of the board so conflicts are visible immediately.</p>
+
+<div class="cta-box"><p><strong>Try it yourself.</strong> The free toolkit does the calculations and code for you in the browser.</p><a class="cta" href="../index.html#wizard">Open the project wizard</a></div>
+<div class="related"><h2>More guides</h2><div class="cards"><a class="card-link" href="resistor-color-code.html"><strong>How to Read Resistor Color Codes (4-Band, 5-Band and SMD)</strong><span>Decode 4-band, 5-band and SMD resistor markings step by step.</span></a><a class="card-link" href="led-resistor-ohms-law.html"><strong>Ohm’s Law and How to Choose a Resistor for an LED</strong><span>Calculate the right LED resistor with worked examples for 5 V and 3.3 V.</span></a><a class="card-link" href="ws2812b-matrix-arduino-esp32.html"><strong>Wiring a WS2812B LED Matrix to Arduino and ESP32</strong><span>Power, wiring, level shifting and code for WS2812B matrices.</span></a></div></div>
+</article>
+</main>
+<footer class="site-footer"><div class="bar">
+<nav aria-label="Footer"><a href="../guides/index.html">Guides</a><a href="../about.html">About</a><a href="../privacy.html">Privacy policy</a><a href="../contact.html">Contact</a></nav>
+<div>&copy; 2026 Electronics Toolkit. All rights reserved.</div>
+</div></footer>
+</body>
+</html>

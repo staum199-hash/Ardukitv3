@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://ardukit.netlify.app/</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/guides/index.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/guides/resistor-color-code.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/guides/led-resistor-ohms-law.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/guides/ws2812b-matrix-arduino-esp32.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/guides/choosing-pins-arduino-esp32.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/about.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/privacy.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://ardukit.netlify.app/contact.html</loc><lastmod>2026-10-06</lastmod></url>
+</urlset>

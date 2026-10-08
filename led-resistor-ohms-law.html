@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohm’s Law and How to Choose a Resistor for an LED</title>
+<meta name="description" content="Understand Ohm’s law and calculate the right current-limiting resistor for any LED, with worked examples for 5 V and 3.3 V boards.">
+<link rel="canonical" href="https://ardukit.netlify.app/guides/led-resistor-ohms-law.html">
+<meta name="google-adsense-account" content="ca-pub-3924102528396167">
+<meta name="theme-color" content="#0b0c14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1fb" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ohm’s Law and How to Choose a Resistor for an LED">
+<meta property="og:description" content="Understand Ohm’s law and calculate the right current-limiting resistor for any LED, with worked examples for 5 V and 3.3 V boards.">
+<meta property="og:url" content="https://ardukit.netlify.app/guides/led-resistor-ohms-law.html">
+<link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+<link rel="stylesheet" href="../site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3924102528396167" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="site-header"><div class="bar">
+<a class="brand" href="../index.html"><img src="../icons/icon-192.png" alt="" width="26" height="26"><span>Electronics Toolkit</span></a>
+<nav aria-label="Main"><a href="../index.html">Toolkit</a><a href="../guides/index.html" aria-current="page">Guides</a><a href="../about.html">About</a></nav>
+</div></header>
+<main id="content">
+<article>
+<p class="meta"><a href="index.html">Guides</a> &rsaquo; Ohm’s Law and How to Choose a Resistor for an LED</p>
+<h1>Ohm’s Law and How to Choose a Resistor for an LED</h1>
+
+<p class="lead">An LED connected straight to a power supply will draw as much current as it can until it burns out. A resistor in series limits that current to a safe, predictable value. Choosing it takes one formula and a little rounding, and this guide shows exactly how.</p>
+
+<h2>Ohm’s law in one minute</h2>
+<p>Ohm’s law links three quantities: voltage (V, in volts), current (I, in amperes) and resistance (R, in ohms).</p>
+<div class="formula">V = I × R &nbsp;&nbsp;&nbsp; I = V ÷ R &nbsp;&nbsp;&nbsp; R = V ÷ I</div>
+<p>Power follows from it. The power a resistor turns into heat is <strong>P = V × I</strong>, which is also <strong>P = I² × R</strong>. Power matters because a resistor has a power rating (commonly ¼ W), and exceeding it makes the part run hot.</p>
+
+<aside class="ad-slot" aria-label="Advertisement"><span class="ad-label">Advertisement</span><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3924102528396167" data-ad-slot="4335930823" data-ad-format="auto" data-full-width-responsive="true"></ins></aside>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<h2>What an LED does to the circuit</h2>
+<p>An LED is not like a resistor. Once it starts conducting, the voltage across it stays almost constant, which is called the forward voltage (Vf). The current, however, can rise very quickly with a small rise in voltage. That is why you never power an LED directly from a fixed supply: the series resistor takes up the difference between the supply and the LED’s forward voltage and fixes the current.</p>
+
+<h2>The LED resistor formula</h2>
+<div class="formula">R = (Vsupply − Vf) ÷ I</div>
+<p>Use the supply voltage, the LED’s forward voltage and the current you want, in amperes. Typical forward voltages are listed below. They vary between manufacturers, so check the datasheet when you can.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>LED color</th><th>Typical Vf</th></tr></thead>
+<tbody>
+<tr><td>Red</td><td>1.8 – 2.2 V</td></tr>
+<tr><td>Yellow / amber</td><td>1.9 – 2.2 V</td></tr>
+<tr><td>Green</td><td>2.0 – 3.3 V (depends on the type)</td></tr>
+<tr><td>Blue</td><td>2.8 – 3.4 V</td></tr>
+<tr><td>White</td><td>2.8 – 3.4 V</td></tr>
+</tbody></table></div>
+
+<h2>Worked example 1: red LED on 5 V</h2>
+<p>You have a 5 V Arduino, a red LED with Vf = 2.0 V and you want 15 mA (0.015 A).</p>
+<div class="example">R = (5 − 2.0) ÷ 0.015 = <strong>200 Ω</strong>. The nearest standard values are 180 Ω and 220 Ω. Take the higher one, 220 Ω. The real current is 3.0 V ÷ 220 Ω ≈ 13.6 mA, slightly below the target, which is the safe direction. The resistor dissipates 0.0136² × 220 ≈ 0.04 W, far below ¼ W.</div>
+
+<h2>Worked example 2: red LED on 3.3 V</h2>
+<p>On an ESP32 or other 3.3 V board there is much less voltage to spare. With the same red LED and a target of 10 mA:</p>
+<div class="example">R = (3.3 − 2.0) ÷ 0.010 = <strong>130 Ω</strong>. Round up to 150 Ω. The real current is 1.3 V ÷ 150 Ω ≈ 8.7 mA, which is still clearly visible.</div>
+
+<h2>Worked example 3: blue LED on 5 V</h2>
+<div class="example">With Vf = 3.2 V and 10 mA: R = (5 − 3.2) ÷ 0.010 = <strong>180 Ω</strong>, which happens to be a standard value, so no rounding is needed.</div>
+
+<h2>How much current should I use?</h2>
+<ul>
+<li>Standard 5 mm indicator LEDs are rated for roughly 20 mA, but they are already bright at 5 to 10 mA. Running below the maximum extends their life.</li>
+<li>Microcontroller pins have their own limits. The ATmega328P on an Arduino Uno is rated for 40 mA absolute maximum per pin, and 20 mA is the figure normally recommended. The ESP32 is happier with around 10 mA per pin or less.</li>
+<li>Keep the total current of all pins together well within the chip’s overall limit. If you want to light many LEDs or very bright ones, drive them through a transistor or use a dedicated LED driver.</li>
+</ul>
+
+<h2>Why you round up, not down</h2>
+<p>A larger resistor means less current. Rounding to the next standard value above the calculated number keeps the LED under its limit even with component tolerance, a slightly different forward voltage, or a supply that is a little higher than nominal.</p>
+
+<h2>Common mistakes</h2>
+<ul>
+<li><strong>No resistor at all.</strong> The LED may work for a moment, then fail, and it can damage the microcontroller pin.</li>
+<li><strong>One resistor shared by LEDs in parallel.</strong> Real LEDs have slightly different forward voltages, so one of them takes most of the current. Give every LED its own resistor.</li>
+<li><strong>The LED is backwards.</strong> The longer leg is the anode (+). Nothing is damaged, but nothing lights up.</li>
+</ul>
+
+<h2>LEDs in series</h2>
+<p>If you connect LEDs in series, add up their forward voltages and use that total in the formula. Three red LEDs (about 2 V each) on a 12 V supply at 20 mA need R = (12 − 6) ÷ 0.020 = 300 Ω. The nearest standard value above is 330 Ω, giving about 18 mA. The current is the same through every LED in the chain, so one resistor is enough.</p>
+
+<div class="cta-box"><p><strong>Try it yourself.</strong> The free toolkit does the calculations and code for you in the browser.</p><a class="cta" href="../index.html#resistor">Open the resistor calculator</a></div>
+<div class="related"><h2>More guides</h2><div class="cards"><a class="card-link" href="resistor-color-code.html"><strong>How to Read Resistor Color Codes (4-Band, 5-Band and SMD)</strong><span>Decode 4-band, 5-band and SMD resistor markings step by step.</span></a><a class="card-link" href="ws2812b-matrix-arduino-esp32.html"><strong>Wiring a WS2812B LED Matrix to Arduino and ESP32</strong><span>Power, wiring, level shifting and code for WS2812B matrices.</span></a><a class="card-link" href="choosing-pins-arduino-esp32.html"><strong>Choosing the Right Pins on Arduino Uno and ESP32</strong><span>Which pins are safe, reserved or risky on Uno and ESP32 boards.</span></a></div></div>
+</article>
+</main>
+<footer class="site-footer"><div class="bar">
+<nav aria-label="Footer"><a href="../guides/index.html">Guides</a><a href="../about.html">About</a><a href="../privacy.html">Privacy policy</a><a href="../contact.html">Contact</a></nav>
+<div>&copy; 2026 Electronics Toolkit. All rights reserved.</div>
+</div></footer>
+</body>
+</html>

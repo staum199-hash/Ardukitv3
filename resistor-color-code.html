@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Read Resistor Color Codes (4-Band, 5-Band and SMD)</title>
+<meta name="description" content="Learn to read 4-band and 5-band resistor color codes and SMD markings like 103, 4R7 and 01C, with worked examples and a quick reference table.">
+<link rel="canonical" href="https://ardukit.netlify.app/guides/resistor-color-code.html">
+<meta name="google-adsense-account" content="ca-pub-3924102528396167">
+<meta name="theme-color" content="#0b0c14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1fb" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Read Resistor Color Codes (4-Band, 5-Band and SMD)">
+<meta property="og:description" content="Learn to read 4-band and 5-band resistor color codes and SMD markings like 103, 4R7 and 01C, with worked examples and a quick reference table.">
+<meta property="og:url" content="https://ardukit.netlify.app/guides/resistor-color-code.html">
+<link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+<link rel="stylesheet" href="../site.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3924102528396167" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="site-header"><div class="bar">
+<a class="brand" href="../index.html"><img src="../icons/icon-192.png" alt="" width="26" height="26"><span>Electronics Toolkit</span></a>
+<nav aria-label="Main"><a href="../index.html">Toolkit</a><a href="../guides/index.html" aria-current="page">Guides</a><a href="../about.html">About</a></nav>
+</div></header>
+<main id="content">
+<article>
+<p class="meta"><a href="index.html">Guides</a> &rsaquo; How to Read Resistor Color Codes (4-Band, 5-Band and SMD)</p>
+<h1>How to Read Resistor Color Codes (4-Band, 5-Band and SMD)</h1>
+
+<p class="lead">Almost every through-hole resistor carries its value as a set of colored bands, and almost every surface-mount resistor carries it as a short printed code. Once you know the pattern, you can read either one in a few seconds, without a multimeter. This guide walks through both systems with worked examples.</p>
+
+<h2>The color table</h2>
+<p>Each color stands for a digit. The same colors also describe the multiplier (how many zeros to add) and the tolerance (how far the real value may drift from the printed one).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Color</th><th>Digit</th><th>Multiplier</th><th>Tolerance</th></tr></thead>
+<tbody>
+<tr><td>Black</td><td>0</td><td>×1</td><td>–</td></tr>
+<tr><td>Brown</td><td>1</td><td>×10</td><td>±1%</td></tr>
+<tr><td>Red</td><td>2</td><td>×100</td><td>±2%</td></tr>
+<tr><td>Orange</td><td>3</td><td>×1 k</td><td>–</td></tr>
+<tr><td>Yellow</td><td>4</td><td>×10 k</td><td>–</td></tr>
+<tr><td>Green</td><td>5</td><td>×100 k</td><td>±0.5%</td></tr>
+<tr><td>Blue</td><td>6</td><td>×1 M</td><td>±0.25%</td></tr>
+<tr><td>Violet</td><td>7</td><td>×10 M</td><td>±0.1%</td></tr>
+<tr><td>Grey</td><td>8</td><td>×100 M</td><td>±0.05%</td></tr>
+<tr><td>White</td><td>9</td><td>×1 G</td><td>–</td></tr>
+<tr><td>Gold</td><td>–</td><td>×0.1</td><td>±5%</td></tr>
+<tr><td>Silver</td><td>–</td><td>×0.01</td><td>±10%</td></tr>
+<tr><td>No band</td><td>–</td><td>–</td><td>±20%</td></tr>
+</tbody></table></div>
+
+<aside class="ad-slot" aria-label="Advertisement"><span class="ad-label">Advertisement</span><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3924102528396167" data-ad-slot="4335930823" data-ad-format="auto" data-full-width-responsive="true"></ins></aside>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<h2>Reading a 4-band resistor</h2>
+<p>A 4-band resistor is the common general-purpose type. Read the bands from the end that is closest to the edge of the body:</p>
+<ol>
+<li>Band 1 is the first digit.</li>
+<li>Band 2 is the second digit.</li>
+<li>Band 3 is the multiplier. Write the two digits side by side, then multiply.</li>
+<li>Band 4 is the tolerance, usually gold (±5%) or silver (±10%).</li>
+</ol>
+<div class="example"><strong>Example:</strong> yellow, violet, orange, gold. Yellow is 4 and violet is 7, so the digits are 47. Orange means ×1,000, which gives 47,000 Ω, or <strong>47 kΩ</strong>. Gold means the real value can be anywhere within ±5%, from about 44.7 kΩ to 49.4 kΩ.</div>
+
+<h2>Reading a 5-band resistor</h2>
+<p>Precision resistors usually have five bands. The only change is a third digit before the multiplier: three digits, then the multiplier, then the tolerance.</p>
+<div class="example"><strong>Example:</strong> brown, black, black, red, brown. The digits are 1, 0, 0, which gives 100. Red means ×100, so the value is 10,000 Ω, or <strong>10 kΩ</strong>. The final brown band means ±1%, a much tighter tolerance than a typical gold band.</div>
+
+<h2>Which end do I start from?</h2>
+<p>This is the most common source of mistakes. A few rules of thumb help:</p>
+<ul>
+<li>The tolerance band is often separated from the others by a slightly larger gap.</li>
+<li>Gold and silver are almost never used as the first digit, so if one of them is at an end, that end is the tolerance band.</li>
+<li>The first band is usually closer to its end of the resistor than the last band is to the other end.</li>
+<li>If the result looks strange, read the resistor from the other end and see which direction gives a standard value.</li>
+</ul>
+
+<h2>Common values you will see all the time</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Value</th><th>4-band colors</th><th>Typical use</th></tr></thead>
+<tbody>
+<tr><td>220 Ω</td><td>red, red, brown, gold</td><td>LED current limiting at 5 V</td></tr>
+<tr><td>330 Ω</td><td>orange, orange, brown, gold</td><td>LED resistor, data line on LED strips</td></tr>
+<tr><td>1 kΩ</td><td>brown, black, red, gold</td><td>Transistor bases, general purpose</td></tr>
+<tr><td>4.7 kΩ</td><td>yellow, violet, red, gold</td><td>I²C pull-ups</td></tr>
+<tr><td>10 kΩ</td><td>brown, black, orange, gold</td><td>Pull-up and pull-down resistors, voltage dividers</td></tr>
+</tbody></table></div>
+
+<h2>Reading SMD resistor codes</h2>
+<p>Surface-mount resistors are too small for color bands, so they carry a printed code instead. There are four common formats:</p>
+<ul>
+<li><strong>Three digits:</strong> the first two digits are the value and the third is the number of zeros. <code>103</code> means 10 followed by three zeros, so 10 kΩ. <code>472</code> means 47 followed by two zeros, so 4.7 kΩ.</li>
+<li><strong>Four digits:</strong> the same idea with three significant digits. <code>1002</code> means 100 followed by two zeros, so 10 kΩ.</li>
+<li><strong>The letter R:</strong> R stands for the decimal point. <code>4R7</code> is 4.7 Ω and <code>R47</code> is 0.47 Ω.</li>
+<li><strong>A single zero (<code>0</code> or <code>000</code>):</strong> a zero-ohm link, which is simply a jumper wire in resistor packaging.</li>
+</ul>
+<p>Very precise 1% parts in small packages often use the EIA-96 system: two digits that select a value from a table of 96 numbers, followed by a letter that gives the multiplier. For example, <code>01C</code> means code 01 (which is 100) times the multiplier for C (×100), giving 10 kΩ. This format is hard to decode from memory, which is exactly where a calculator helps.</p>
+
+<h2>Checking with a multimeter</h2>
+<p>Colors can fade, light can be misleading, and some brown, red and orange shades look similar. When the value matters, measure it. Take the resistor out of the circuit first (or at least lift one leg), because other components in parallel will skew the reading. A resistor within its tolerance band is fine: a 10 kΩ ±5% part measuring 9.8 kΩ is perfectly normal.</p>
+
+<h2>Standard values</h2>
+<p>Resistors are not made in every possible value. They follow preferred-number series such as E12 (10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82 and their decades) and E24 for tighter tolerances. When a calculation gives you an in-between number, you pick the nearest standard value, and for LED resistors you normally round up so the current stays on the safe side.</p>
+
+<div class="cta-box"><p><strong>Try it yourself.</strong> The free toolkit does the calculations and code for you in the browser.</p><a class="cta" href="../index.html#resistor">Open the resistor calculator</a></div>
+<div class="related"><h2>More guides</h2><div class="cards"><a class="card-link" href="led-resistor-ohms-law.html"><strong>Ohm’s Law and How to Choose a Resistor for an LED</strong><span>Calculate the right LED resistor with worked examples for 5 V and 3.3 V.</span></a><a class="card-link" href="ws2812b-matrix-arduino-esp32.html"><strong>Wiring a WS2812B LED Matrix to Arduino and ESP32</strong><span>Power, wiring, level shifting and code for WS2812B matrices.</span></a><a class="card-link" href="choosing-pins-arduino-esp32.html"><strong>Choosing the Right Pins on Arduino Uno and ESP32</strong><span>Which pins are safe, reserved or risky on Uno and ESP32 boards.</span></a></div></div>
+</article>
+</main>
+<footer class="site-footer"><div class="bar">
+<nav aria-label="Footer"><a href="../guides/index.html">Guides</a><a href="../about.html">About</a><a href="../privacy.html">Privacy policy</a><a href="../contact.html">Contact</a></nav>
+<div>&copy; 2026 Electronics Toolkit. All rights reserved.</div>
+</div></footer>
+</body>
+</html>
