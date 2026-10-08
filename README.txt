@@ -1,4 +1,4 @@
-Electronics Toolkit - v2 (AdSense-ready structure)
+Electronics Toolkit - v2.0.1 (AdSense-ready structure)
 ==================================================
 
 Upload the whole folder to the site root (Netlify: drag the folder contents, so index.html sits at the top level).
